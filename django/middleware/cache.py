@@ -93,7 +93,7 @@ class UpdateCacheMiddleware(object):
         if not self._should_update_cache(request, response):
             # We don't need to update the cache, just return.
             return response
-        if response.streaming or response.status_code != 200:
+        if response.streaming or response.status_code not in [200, 301, 302]:
             return response
         # Try to get the timeout from the "max-age" section of the "Cache-
         # Control" header before reverting to using the default cache_timeout
